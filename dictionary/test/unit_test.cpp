@@ -149,7 +149,52 @@ TEST(dictContains, quadItemTrippleCapacityDoesNotHaveItem) {
 	ASSERT_FALSE(hashTable.contain(8));
 }
 
-TEST(dict, remove) {
-    // homework
-    ASSERT_TRUE(false); // placeholder
+TEST(dictRemove, fromEmpty) {
+	ArrayDictionary<int, int> hashTable;
+	
+	ASSERT_FALSE(hashTable.remove(1));
 }
+
+TEST(dictRemove, existsWithoutCollision) {
+	ArrayDictionary<int, int> hashTable;
+	hashTable.add(0, 103);
+	hashTable.add(1, 105);
+	hashTable.add(2, 206);
+
+	ASSERT_TRUE(hashTable.remove(1));
+	ASSERT_FALSE(hashTable.contain(1));
+}
+
+TEST(dictRemove, doesNotExistsWithoutCollision) {
+	ArrayDictionary<int, int> hashTable;
+	hashTable.add(0, 103);
+	hashTable.add(1, 105);
+	hashTable.add(2, 206);
+
+	ASSERT_TRUE(hashTable.remove(7));
+}
+
+TEST(dictRemove, doesNotExistsWithCollision) {
+	ArrayDictionary<int, int> hashTable;
+	hashTable.add(0, 103);
+	hashTable.add(1, 105);
+	hashTable.add(1, 105);
+	hashTable.add(2, 206);
+
+	ASSERT_TRUE(hashTable.remove(7));
+	ASSERT_FALSE(hashTable.contain(7));
+}
+
+
+TEST(dictRemove, existsWithCollision) {
+	ArrayDictionary<int, int> hashTable;
+	hashTable.add(0, 103);
+	hashTable.add(1, 105);
+	hashTable.add(1, 105);
+	hashTable.add(2, 206);
+
+	ASSERT_TRUE(hashTable.remove(1));
+	ASSERT_FALSE(hashTable.contain(1));
+}
+
+
