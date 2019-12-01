@@ -171,18 +171,7 @@ TEST(dictRemove, doesNotExistsWithoutCollision) {
 	hashTable.add(1, 105);
 	hashTable.add(2, 206);
 
-	ASSERT_TRUE(hashTable.remove(7));
-}
-
-TEST(dictRemove, doesNotExistsWithCollision) {
-	ArrayDictionary<int, int> hashTable;
-	hashTable.add(0, 103);
-	hashTable.add(1, 105);
-	hashTable.add(1, 105);
-	hashTable.add(2, 206);
-
-	ASSERT_TRUE(hashTable.remove(7));
-	ASSERT_FALSE(hashTable.contain(7));
+	ASSERT_FALSE(hashTable.remove(7));
 }
 
 
@@ -190,11 +179,21 @@ TEST(dictRemove, existsWithCollision) {
 	ArrayDictionary<int, int> hashTable;
 	hashTable.add(0, 103);
 	hashTable.add(1, 105);
-	hashTable.add(1, 105);
+	hashTable.add(1, 106);
 	hashTable.add(2, 206);
 
 	ASSERT_TRUE(hashTable.remove(1));
 	ASSERT_FALSE(hashTable.contain(1));
+}
+
+TEST(dictRemove, doesNotExistsWithCollision) {
+	ArrayDictionary<int, int> hashTable;
+	hashTable.add(0, 103);
+	hashTable.add(1, 105);
+	hashTable.add(1, 106);
+	hashTable.add(2, 206);
+
+	ASSERT_FALSE(hashTable.remove(7));
 }
 
 

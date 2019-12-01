@@ -123,12 +123,21 @@ public:
     }
 
     bool contain(KeyType const &key) override {
-        for (int i = 0; i < capacity; i++) {
-			if(entries[i] != nullptr && entries[i]->getKey() == key) {
-			   return true;
-			}
+		if(size() == 0) {
+			return false;
 		}
-		
+
+		int hashedKey = hashFunc(key);
+		Entry<KeyType, ValueType> *curr = entries[hashedKey];
+
+		while(curr != nullptr) {
+			if(curr->key == key) {
+				return true;
+			}
+
+			curr = curr->next;
+		}
+
 		return false;
     }
 
@@ -136,8 +145,32 @@ public:
         // not implemented
     }
 
+	// pretty much copy and pasted the add function
     bool remove(KeyType const &key) override {
-		
-        return false;
+		int hashedKey = hashFunc(key);
+
+        if (entries[hashedKey] == nullptr) {
+			return false;
+		}
+
+		bool result = false;
+		Entry<KeyType, ValueType> *curr = entries[hashedKey];
+        Entry<KeyType, ValueType> *prev = nullptr;
+        while (curr != nullptr) {
+            if (curr->key == key) {
+				if(prev == nullptr){
+					entries[hashedKey] = curr->next;
+				} else {
+					prev->next = curr->next;
+				}
+
+				result = true;
+            }
+
+			prev = curr;
+			curr = curr->next;
+        }
+
+		return result;
     }
 };
