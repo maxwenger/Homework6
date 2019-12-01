@@ -70,9 +70,83 @@ TEST(dict, array_dict_add_get) {
     ASSERT_EQ(val, 4);
 }
 
-TEST(dict, contains) {
-    // homework
-    ASSERT_TRUE(false); // placeholder
+TEST(dictContains, emptyDictReturnsFalse) {
+    ArrayDictionary<int, int> hashTable;
+
+	ASSERT_FALSE(hashTable.contain(-1));
+	ASSERT_FALSE(hashTable.contain(0));
+	ASSERT_FALSE(hashTable.contain(1));
+}
+
+TEST(dictContains, singleItemDictDoesNotHaveItem) {
+    ArrayDictionary<int, int> hashTable(1);
+	hashTable.add(0, 103);
+
+	ASSERT_FALSE(hashTable.contain(2));
+}
+
+TEST(dictContains, singleItemDictHasItem) {
+    ArrayDictionary<int, int> hashTable(1);
+	hashTable.add(0, 103);
+
+	ASSERT_TRUE(hashTable.contain(0));
+}
+
+TEST(dictContains, doubleItemDictDoesNotHaveItem) {
+	ArrayDictionary<int, int> hashTable(2);
+	hashTable.add(0, 103);
+	hashTable.add(1, 105);
+
+	ASSERT_TRUE(hashTable.contain(0));
+	ASSERT_TRUE(hashTable.contain(1));
+}
+
+TEST(dictContains, doubleItemDictHasItem) {
+	ArrayDictionary<int, int> hashTable(2);
+	hashTable.add(0, 103);
+	hashTable.add(1, 105);
+
+	ASSERT_FALSE(hashTable.contain(2));
+	ASSERT_FALSE(hashTable.contain(3));
+}
+
+TEST(dictContains, doubleItemTrippleCapacityDoesNotHaveItem) {
+	ArrayDictionary<int, int> hashTable(3);
+	hashTable.add(0, 103);
+	hashTable.add(1, 105);
+
+	ASSERT_FALSE(hashTable.contain(3));
+}
+
+TEST(dictContains, trippleItemTrippleCapacityHasItem) {
+	ArrayDictionary<int, int> hashTable(3);
+	hashTable.add(0, 103);
+	hashTable.add(1, 105);
+	hashTable.add(2, 206);
+
+	ASSERT_TRUE(hashTable.contain(1));
+}
+
+TEST(dictContains, quadItemTrippleCapacityHasItem) {
+	ArrayDictionary<int, int> hashTable(3);
+	hashTable.add(0, 103);
+	hashTable.add(1, 105);
+	hashTable.add(2, 206);
+	hashTable.add(4, 407);
+
+	ASSERT_TRUE(hashTable.contain(1));
+	ASSERT_TRUE(hashTable.contain(4));
+}
+
+TEST(dictContains, quadItemTrippleCapacityDoesNotHaveItem) {
+	ArrayDictionary<int, int> hashTable(3);
+	hashTable.add(0, 103);
+	hashTable.add(1, 105);
+	hashTable.add(2, 206);
+	hashTable.add(4, 407);
+
+	ASSERT_FALSE(hashTable.contain(7));
+	ASSERT_FALSE(hashTable.contain(8));
 }
 
 TEST(dict, remove) {

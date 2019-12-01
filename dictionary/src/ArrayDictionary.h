@@ -123,8 +123,13 @@ public:
     }
 
     bool contain(KeyType const &key) override {
-        // homework
-        return false;
+        for (int i = 0; i < capacity; i++) {
+			if(entries[i] != nullptr && entries[i]->getKey() == key) {
+			   return true;
+			}
+		}
+		
+		return false;
     }
 
     void traverse() override {
@@ -132,7 +137,7 @@ public:
     }
 
     bool remove(KeyType const &key) override {
-        // homework
+		
         return false;
     }
 };
