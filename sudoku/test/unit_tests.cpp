@@ -74,6 +74,8 @@ TEST(sudoku, case1) {
     Sudoku sudoku(grid);
     sudoku.print();
     sudoku.solve();
+	printf("\n");
+    sudoku.print();
     ASSERT_TRUE(sudoku==answer);
 }
 
