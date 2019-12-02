@@ -6,15 +6,14 @@ private:
     int grid[9][9]{};
 	
 	bool isCellValid(int rowIndex, int columnIndex, int val) {
-		return isColumnValid(rowIndex, columnIndex, val)
-			&& isRowValid(rowIndex, columnIndex, val)
-		 	&& isBoxValid(rowIndex, columnIndex, val)
-		;
+		return  isColumnValid(columnIndex, val)
+			 && isRowValid(rowIndex, val)
+		 	 && isBoxValid(rowIndex, columnIndex, val);
 	}
 
-	bool isColumnValid(int rowIndex, int columnIndex, int val) {
+	bool isColumnValid(int columnIndex, int val) {
 		for(int i = 0; i < 9; i++) {
-			if(grid[columnIndex][i] == val) {
+			if(grid[i][columnIndex] == val) {
 				return false;
 			}
 		}
@@ -22,9 +21,9 @@ private:
 		return true;
 	}
 
-	bool isRowValid(int rowIndex, int columnIndex, int val) {
+	bool isRowValid(int rowIndex, int val) {
 		for(int i = 0; i < 9; i++) {
-			if(grid[i][rowIndex] == val) {
+			if(grid[rowIndex][i] == val) {
 				return false;
 			}
 		}
@@ -33,17 +32,13 @@ private:
 	}
 
 	bool isBoxValid(int rowIndex, int columnIndex, int val) {
-		// gives us the position of the minibox (from 0 to 2),
-		// This gives us the index on the grid. because each
+		// This gives us the index on the grid for the start of the mini box. because each
 		// box is 3 x 3
-		rowIndex = rowIndex / 3;
-		rowIndex *= 3;
+		int boxRowIndex = (rowIndex / 3) * 3;
+		int boxColIndex = (columnIndex / 3) * 3;
 
-		columnIndex = columnIndex / 3;
-		columnIndex *= 3;
-
-		for(int i = columnIndex; i < columnIndex + 3; i++) {
-			for(int j = rowIndex; j < rowIndex + 3; j++) {
+		for(int i = boxRowIndex; i < boxRowIndex + 3; i++) {
+			for(int j = boxColIndex; j < boxColIndex + 3; j++) {
 				if(grid[i][j] == val) {
 					return false;
 				}
@@ -70,9 +65,9 @@ private:
 
 		for(int i = 0; i < 9; i++) {
 			for(int j = 0; j < 9; j++) {
-				if(grid[i][j] == 0) {
-					emptyIndex[0] = i;
-					emptyIndex[1] = j;
+				if(grid[j][i] == 0) {
+					emptyIndex[0] = j;
+					emptyIndex[1] = i;
 
 					return emptyIndex;
 				}
@@ -141,7 +136,6 @@ public:
 		}
 
 		std::vector nextEmptyIndex = getNextEmptyIndex();
-		// printf("NE: %d, %d == %d\n", nextEmptyIndex[0], nextEmptyIndex[1], grid[nextEmptyIndex[0]][nextEmptyIndex[1]]);
 
 		for(int i = 1; i <= 9; i++) {
 			if(isCellValid(nextEmptyIndex[0], nextEmptyIndex[1], i)) {
